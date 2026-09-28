@@ -159,16 +159,14 @@ Everything else (billing product `lifetime`, keystore) is already wired.
 
 ---
 
-## GitHub Pages hosting (privacy policy)
+## Privacy policy (live ✅)
 
-```bash
-git init && git add -A && git commit -m "Photo Compressor v1"
-# create repo on github.com (any name), then:
-git remote add origin git@github.com:YOU/REPO.git
-git push -u origin main
-# Repo → Settings → Pages → Source: "Deploy from a branch" → main /docs
-# Policy URL becomes: https://YOU.github.io/REPO/privacy-policy.html
-```
+- **URL for Play Console / App Store Connect:**
+  `https://huseyin-donmez.github.io/photo-compressor/privacy-policy.html`
+- Source: `docs/privacy-policy.html` (Pages serves the `/docs` folder of
+  `github.com/huseyin-donmez/photo-compressor`, public).
+- **BEFORE publishing:** replace `REPLACE_WITH_YOUR_EMAIL@example.com`
+  inside that file → commit → push → Pages rebuilds in ~1 minute.
 
 ---
 
