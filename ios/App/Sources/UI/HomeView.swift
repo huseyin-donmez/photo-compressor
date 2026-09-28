@@ -14,7 +14,7 @@ struct HomeView: View {
     let priceLabel: String
     let onTargetChange: (SizeUnit, Int) -> Void
     let onPicked: ([PickedImage]) -> Void
-    let onClearSelection: () -> Unit
+    let onClearSelection: () -> Void
     let onRemovePhoto: (PickedImage) -> Void
     let onResize: () -> Void
     let onWatchAd: () -> Void

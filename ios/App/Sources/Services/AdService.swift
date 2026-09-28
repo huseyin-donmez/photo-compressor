@@ -12,7 +12,7 @@ import UserMessagingPlatform
 /// Isolation notes: all mutable state is behind `lock`; anything UIKit/UMP
 /// touches is explicitly hop-to-main via DispatchQueue.main, keeping the type
 /// free of actor annotations (headers mark the GMA/UMP APIs NS_SWIFT_UI_ACTOR).
-final class AdService: NSObject, @unchecked Sendable {
+final class AdService: NSObject, ObservableObject, @unchecked Sendable {
     static let rewardedUnitID = "ca-app-pub-3940256099942544/5224354917"
     static let bannerUnitID = "ca-app-pub-3940256099942544/6300978111"
 
@@ -25,7 +25,7 @@ final class AdService: NSObject, @unchecked Sendable {
     /// SDK init → consent (form where required) → warm the first rewarded ad.
     /// Everything is best-effort: failures just mean ads may not serve.
     func prepare() {
-        MobileAds.shared().start { [weak self] in
+        MobileAds.shared.start { [weak self] _ in
             // UMP requires the main thread for every call.
             DispatchQueue.main.async { self?.ensureConsentThenWarm() }
         }

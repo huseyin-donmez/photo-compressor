@@ -27,7 +27,7 @@ struct AppRoot: View {
     @StateObject private var billing = BillingService()
     @StateObject private var ads = AdService()
 
-    @AppStorage("target.unit") private var storedUnit = SizeUnit.defaultUnit.rawValue
+    @AppStorage("target.unit") private var storedUnit = TargetSizes.defaultUnit.rawValue
     @AppStorage("target.value") private var storedValue = TargetSizes.defaultValue
 
     @State private var selection: [PickedImage] = []

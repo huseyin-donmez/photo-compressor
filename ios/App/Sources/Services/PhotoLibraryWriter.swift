@@ -19,10 +19,10 @@ enum PhotoLibraryWriter {
 
     static func save(fileURL: URL) async throws {
         let album = try await ensureAlbum()
-        try await PHPhotoLibrary.performChanges {
+        try await PHPhotoLibrary.shared().performChanges {
             let creation = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: fileURL)
             guard let albumRequest = PHAssetCollectionChangeRequest(for: album),
-                  let asset = creation.placeholderForCreatedAsset else { return }
+                  let asset = creation?.placeholderForCreatedAsset else { return }
             albumRequest.addAssets([asset] as NSArray)
         }
     }
@@ -36,10 +36,10 @@ enum PhotoLibraryWriter {
             return album
         }
         var newID: String?
-        try await PHPhotoLibrary.performChanges {
+        try await PHPhotoLibrary.shared().performChanges {
             newID = PHAssetCollectionChangeRequest
                 .creationRequestForAssetCollection(withTitle: albumTitle)
-                .placeholderForCreatedAssetCollection?.localIdentifier
+                .placeholderForCreatedAssetCollection.localIdentifier
         }
         guard let id = newID, let album = fetchAlbum(localID: id) else {
             throw PhotoLibraryError.albumUnavailable
