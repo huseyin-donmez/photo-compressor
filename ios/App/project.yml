@@ -1,0 +1,79 @@
+# XcodeGen spec — run `xcodegen generate` in this folder to (re)create
+# PhotoCompressor.xcodeproj. Requires Xcode installed for building.
+name: PhotoCompressor
+
+options:
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+packages:
+  ImageResizerCore:
+    path: ../
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: "13.10.0"
+  GoogleUserMessagingPlatform:
+    url: https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git
+    from: "3.1.0"
+
+targets:
+  PhotoCompressor:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources/Assets.xcassets
+      - path: Products.storekit   # local StoreKit test config (see scheme note)
+    dependencies:
+      - package: ImageResizerCore
+      - package: GoogleMobileAds
+      - package: GoogleUserMessagingPlatform
+    info:
+      path: Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Photo Compressor
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        # Portrait only — keeps the anchored banner width stable and matches
+        # the wheel-picker layout.
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        # Save compressed photos into the user's library (add-only permission).
+        NSPhotoLibraryAddUsageDescription: >-
+          Photo Compressor saves your compressed photos back to your library.
+          Originals are never modified or deleted.
+        # Google AdMob — PUBLIC TEST app id while developing; swap for the
+        # real one from your AdMob account before shipping (store/LISTING.md).
+        GADApplicationIdentifier: ca-app-pub-3940256099942544~1458002511
+        # TODO(AdMob): paste Google's SKAdNetworkItems list from the AdMob
+        # dashboard into this file (or add it here) before submission.
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.photocompressor.kbmb
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_FILE: Resources/Info.plist
+        GENERATE_INFOPLIST_FILE: "NO"
+        SWIFT_VERSION: "5.0"
+        ENABLE_USER_SCRIPT_SANDBOXING: "YES"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+        # Development team is filled in once the Apple Developer account
+        # exists (Xcode ▸ Settings ▸ Accounts ▸ team, or add
+        # DEVELOPMENT_TEAM = XXXXXXX here).
+        # DEVELOPMENT_TEAM: "XXXXXXXXXX"
+
+schemes:
+  PhotoCompressor:
+    build:
+      targets:
+        PhotoCompressor: all
+    run:
+      config: Debug
+      # StoreKit testing without App Store Connect: Xcode ▸ Scheme ▸ Edit ▸
+      # Run ▸ Options ▸ StoreKit Configuration ▸ Products (one-time).

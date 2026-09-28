@@ -1,0 +1,39 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "identifier" : "com.photocompressor.kbmb",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "LIFETIME01",
+      "localizations" : [
+        {
+          "description" : "Unlimited compression, all ads removed. One-time purchase.",
+          "displayName" : "Lifetime unlock",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "lifetime",
+      "referenceName" : "Lifetime unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
