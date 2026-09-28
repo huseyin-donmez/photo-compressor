@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 31+: branded launch frame (the system draws the app icon on top).
+     Keep any base-theme items in sync here if the day theme grows items. -->
+<resources>
+    <style name="Theme.ImageResizer" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowSplashScreenBackground">#0D47A1</item>
+    </style>
+</resources>

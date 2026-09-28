@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FileProvider paths: the API-28 legacy publish writes to
+     Pictures/ImageResizer (see OutputPublisher.publishLegacy). -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="resized_images"
+        path="Pictures/ImageResizer/" />
+</paths>

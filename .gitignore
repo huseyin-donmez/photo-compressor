@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# SwiftPM
+.build/
+swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+keystore.properties
+*.jks
+*.keystore
+
+# Generated test fixtures (regenerate with scripts/make_fixtures.py)
+testdata/
+
+# Xcode
+DerivedData/

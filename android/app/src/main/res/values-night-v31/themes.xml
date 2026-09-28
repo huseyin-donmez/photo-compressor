@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 31+ dark variant of the launch frame. -->
+<resources>
+    <style name="Theme.ImageResizer" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowSplashScreenBackground">#082451</item>
+    </style>
+</resources>
