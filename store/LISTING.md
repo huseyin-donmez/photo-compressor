@@ -122,18 +122,23 @@ Your photos stay yours. Compress with peace of mind.
 
 ---
 
-## Screenshots shot-list (need ≥2, ideally 4–6 · 1080×1920+)
+## Screenshots — CAPTURED ✅ (2026-09-29)
 
-1. **Home** — size wheel showing `100 KB` + "Choose photos" button
-2. **Selection** — 6–9 thumbnails in the strip above `Resize N photos`
-3. **Running** — progress bar + item list mid-batch
-4. **Done** — `N of N photos saved under …` with `Share N` + `Done`
-5. **Dark mode** — home screen in dark theme (system dark on)
-6. **Share sheet** — gallery → Share → *Photo Compressor* in the Android
-   share sheet (shows share-in)
+Pixel 8 AVD, 1080×2400 (≥ Play's 1080 minimum), ads suppressed (airplane
+mode), free-tier UI with full monetization row visible. In `store/screenshots/`
+— **upload in this order**:
 
-Tip: use a few colorful sample photos (testdata/ fixtures can be AirDropped
-to the phone), don't show ads in shots.
+1. `01-home-100kb.png` — Home, wheel at **100 KB**, Credits: 20, `$5` CTA
+2. `02-selection.png` — 6 colorful thumbnails + `Resize 6 photos`
+3. `03-running.png` — mid-batch: progress bar **3 of 6**, saved/running/waiting
+4. `04-done.png` — `6 of 6 photos saved under 100 KB` + `Share 6` + sizes
+5. `05-dark-home.png` — dark theme home @ 100 KB
+
+(Share-sheet shot skipped — 5 shots already in the ideal 4–6 range.)
+
+Regenerate anytime: boot the AVD with the 8 sample photos already in
+MediaStore and `python3 scripts/store_screenshots.py` (needs the debug APK
+installed; it resets credits, cleans MediaStore pollution, and drives the UI).
 
 ---
 
