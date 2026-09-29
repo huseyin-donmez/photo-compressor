@@ -12,7 +12,7 @@ can't know.
 |---|---|
 | Store title (both stores, ≤30 chars) | `Photo Compressor KB & MB` (24) |
 | Launcher label (Android) | `Photo Compressor` |
-| Package / bundle | `com.imageresizer.app` / iOS id TBD at App Store Connect |
+| Package / bundle | `com.appkitstudios.photocompressor` / iOS `com.photocompressor.kbmb` (old Android id was claimed on Play — renamed 2026-09-29) |
 | Version | `1.0` (versionCode `1`) |
 | Pricing | Free; ads; one-time **$5** unlock (`lifetime`) |
 
@@ -172,6 +172,10 @@ Notes:
   grants +5 regardless, so the two can't drift apart).
 - iOS (`ios/…/AdService.swift`) still carries **Google test IDs** — swap them
   when the Apple Developer account is paid for (Track B note below).
+- **Package renamed** to `com.appkitstudios.photocompressor` (the old
+  `com.imageresizer.app` was claimed by another developer on Play). AdMob is
+  unaffected — it doesn't validate package names; optionally add the Play
+  store URL to the AdMob app record once the listing is live.
 
 ---
 

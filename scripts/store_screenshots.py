@@ -16,7 +16,10 @@ import time
 import xml.etree.ElementTree as ET
 
 ADB = "/opt/homebrew/share/android-commandlinetools/platform-tools/adb"
-PKG = "com.imageresizer.app"
+PKG = "com.appkitstudios.photocompressor"
+# Relative ".MainActivity" would resolve against the applicationId, but the
+# source namespace stays com.imageresizer.app — launch with the full class.
+MAIN = f"{PKG}/com.imageresizer.app.MainActivity"
 OUT = "/Users/huseyin/Desktop/projects/image-resizer/store/screenshots"
 TMP_SHOT = "/data/local/tmp/pcshots"  # NOT on shared storage → never indexed by MediaStore
 WANT = 6  # shot-list wants 6–9 thumbs; rows 1–2 of the grid are tap-safe
@@ -210,7 +213,7 @@ def main():
                        f"'mkdir -p shared_prefs && cat > shared_prefs/usage.xml'"],
         input=prefs, capture_output=True, text=True, timeout=30,
     )
-    shell(f"am start -n {PKG}/.MainActivity")
+    shell(f"am start -n {MAIN}")
     time.sleep(4)
 
     # Home must be visible (billing modal dismissed if it shows).

@@ -20,7 +20,11 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.imageresizer.app"
+        // Play identity — must be globally unique across all developers.
+        // (com.imageresizer.app was already claimed on Play; renamed before
+        // first upload. Only applicationId changes — the Kotlin source
+        // packages/namespace stay com.imageresizer.app.*.)
+        applicationId = "com.appkitstudios.photocompressor"
         minSdk = 28
         targetSdk = 36
         versionCode = 1
