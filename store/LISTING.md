@@ -153,7 +153,7 @@ to the phone), don't show ads in shots.
 | AdMob **app ID** `…~3347511713` | `android/app/build.gradle.kts` `manifestPlaceholders` | Create AdMob account → apps → add app |
 | **Rewarded** unit `…/5224354917` | same file, `REWARDED_AD_UNIT_ID` | AdMob → ad units → Rewarded |
 | **Banner** unit `…/6300978111` | same file, `BANNER_AD_UNIT_ID` | AdMob → ad units → Banner |
-| Contact email in privacy policy | `docs/privacy-policy.html` | Replace `REPLACE_WITH_YOUR_EMAIL@example.com` |
+| Contact email in privacy policy | `docs/privacy-policy.html` | ✅ `appkitstudios@gmail.com` |
 
 Everything else (billing product `lifetime`, keystore) is already wired.
 
@@ -165,8 +165,8 @@ Everything else (billing product `lifetime`, keystore) is already wired.
   `https://huseyin-donmez.github.io/photo-compressor/privacy-policy.html`
 - Source: `docs/privacy-policy.html` (Pages serves the `/docs` folder of
   `github.com/huseyin-donmez/photo-compressor`, public).
-- **BEFORE publishing:** replace `REPLACE_WITH_YOUR_EMAIL@example.com`
-  inside that file → commit → push → Pages rebuilds in ~1 minute.
+- ✅ Contact email set inside that file → `appkitstudios@gmail.com`
+  (committed & pushed; Pages rebuilds in ~1 minute).
 
 ---
 
