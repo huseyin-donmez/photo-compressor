@@ -8,6 +8,8 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.ump.ConsentRequestParameters
@@ -27,6 +29,8 @@ class AdMobAds(private val context: Context) : AdServing {
     private var consentChecked = false
     private var cached: RewardedAd? = null
     private var loading = false
+    private var cachedInterstitial: InterstitialAd? = null
+    private var loadingInterstitial = false
 
     override fun prepare(activity: Activity) {
         try {
@@ -61,7 +65,13 @@ class AdMobAds(private val context: Context) : AdServing {
         }
     }
 
+    /** Warms both formats; called after consent resolves and after each show. */
     private fun warmLoad() {
+        warmRewarded()
+        warmInterstitial()
+    }
+
+    private fun warmRewarded() {
         if (cached != null || loading) return
         loading = true
         try {
@@ -85,6 +95,57 @@ class AdMobAds(private val context: Context) : AdServing {
         }
     }
 
+    private fun warmInterstitial() {
+        if (cachedInterstitial != null || loadingInterstitial) return
+        loadingInterstitial = true
+        try {
+            InterstitialAd.load(
+                context,
+                BuildConfig.INTERSTITIAL_AD_UNIT_ID,
+                AdRequest.Builder().build(),
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdLoaded(ad: InterstitialAd) {
+                        loadingInterstitial = false
+                        cachedInterstitial = ad
+                    }
+
+                    override fun onAdFailedToLoad(error: LoadAdError) {
+                        loadingInterstitial = false // next opportunity retries
+                    }
+                },
+            )
+        } catch (_: Exception) {
+            loadingInterstitial = false
+        }
+    }
+
+    override suspend fun showInterstitial(activity: Activity): Boolean {
+        warmInterstitial()
+        val ad = cachedInterstitial ?: return false // not ready → never delay
+        cachedInterstitial = null // single-use
+        return withContext(Dispatchers.Main) { showInterstitialAd(ad, activity) }
+    }
+
+    private suspend fun showInterstitialAd(ad: InterstitialAd, activity: Activity): Boolean =
+        suspendCancellableCoroutine { continuation ->
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    warmLoad() // refill for the next opportunities
+                    if (continuation.isActive) continuation.resume(true)
+                }
+
+                override fun onAdFailedToShowFullScreenContent(error: AdError) {
+                    warmLoad()
+                    if (continuation.isActive) continuation.resume(false)
+                }
+            }
+            try {
+                ad.show(activity)
+            } catch (_: Exception) {
+                if (continuation.isActive) continuation.resume(false)
+            }
+        }
+
     override suspend fun showRewarded(activity: Activity): Boolean {
         warmLoad()
         val ad = cached ?: return false
@@ -102,6 +163,7 @@ class AdMobAds(private val context: Context) : AdServing {
                 }
 
                 override fun onAdFailedToShowFullScreenContent(error: AdError) {
+                    warmLoad()
                     if (continuation.isActive) continuation.resume(false)
                 }
             }

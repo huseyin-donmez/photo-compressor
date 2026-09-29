@@ -214,6 +214,14 @@ fun AppRoot(
                 modifier = Modifier.padding(padding),
                 state = activeBatch,
                 onDone = { processor.clear() },
+                onDoneFinished = {
+                    // Task-complete → home is the natural interstitial moment
+                    // (free tier only; "Stop here" aborts skip it).
+                    processor.clear()
+                    if (!usage.isPremium) {
+                        scope.launch { ads.showInterstitial(activity) }
+                    }
+                },
                 onResume = { processor.resume() },
                 onCancel = { processor.cancel() },
                 onGetCredits = { showLimit = true },
@@ -364,6 +372,7 @@ private fun BatchScreen(
     modifier: Modifier,
     state: BatchState,
     onDone: () -> Unit,
+    onDoneFinished: () -> Unit,
     onResume: () -> Unit,
     onCancel: () -> Unit,
     onGetCredits: () -> Unit,
@@ -422,12 +431,12 @@ private fun BatchScreen(
                     ) {
                         Text(if (outputs.size == 1) "Share" else "Share ${outputs.size}")
                     }
-                    Button(onClick = onDone, modifier = Modifier.weight(1f)) {
+                    Button(onClick = onDoneFinished, modifier = Modifier.weight(1f)) {
                         Text("Done")
                     }
                 }
             } else {
-                Button(onClick = onDone, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = onDoneFinished, modifier = Modifier.fillMaxWidth()) {
                     Text("Done")
                 }
             }

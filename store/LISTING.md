@@ -70,7 +70,7 @@ Your photos stay yours. Compress with peace of mind.
 
 ## Play Console — form answers
 
-### Data safety form (draft; verify against AdMob's own data-safety snippet when the real SDK IDs are in)
+### Data safety form (real AdMob IDs are in; cross-check AdMob's own data-safety snippet at submission)
 
 - Collects/shares **nothing** from you directly: no personal info, no
   location, no photos, no messages, no device logs.
@@ -88,7 +88,7 @@ Your photos stay yours. Compress with peace of mind.
 
 ### Ads declaration
 
-- App **contains ads** ✅ (rewarded + banner) · not based on ads alone.
+- App **contains ads** ✅ (banner + rewarded + interstitial) · not based on ads alone.
 
 ### Content rating questionnaire
 
@@ -153,14 +153,25 @@ installed; it resets credits, cleans MediaStore pollution, and drives the UI).
 
 ## IDs & accounts to swap before publishing
 
-| Placeholder (test IDs today) | Where | Your action |
+| Placeholder | Where | Status |
 |---|---|---|
-| AdMob **app ID** `…~3347511713` | `android/app/build.gradle.kts` `manifestPlaceholders` | Create AdMob account → apps → add app |
-| **Rewarded** unit `…/5224354917` | same file, `REWARDED_AD_UNIT_ID` | AdMob → ad units → Rewarded |
-| **Banner** unit `…/6300978111` | same file, `BANNER_AD_UNIT_ID` | AdMob → ad units → Banner |
+| AdMob **app ID** `…~8832780276` | `android/app/build.gradle.kts` `manifestPlaceholders` (release) | ✅ swapped 2026-09 |
+| **Rewarded** unit `…/6757106266` | same file, `REWARDED_AD_UNIT_ID` (release) | ✅ swapped 2026-09 |
+| **Banner** unit `…/4402580678` | same file, `BANNER_AD_UNIT_ID` (release) | ✅ swapped 2026-09 |
+| **Interstitial** unit `…/3923145080` | same file, `INTERSTITIAL_AD_UNIT_ID` (release) | ✅ swapped 2026-09 |
 | Contact email in privacy policy | `docs/privacy-policy.html` | ✅ `appkitstudios@gmail.com` |
 
-Everything else (billing product `lifetime`, keystore) is already wired.
+Notes:
+- **Debug builds keep Google's PUBLIC TEST IDs** on purpose — tapping your own
+  live ads is invalid traffic that can get the AdMob account suspended. Only
+  `release` (what Play gets) uses the real IDs.
+- Interstitial placement: **finished-batch "Done" → home** only (free tier;
+  premium never sees it; "Stop here" aborts skip it). Verified on-emulator with
+  the test unit — renders + dismisses to home ✅.
+- Reward config in AdMob UI set to item "Credits" / amount **5** ✅ (the app
+  grants +5 regardless, so the two can't drift apart).
+- iOS (`ios/…/AdService.swift`) still carries **Google test IDs** — swap them
+  when the Apple Developer account is paid for (Track B note below).
 
 ---
 

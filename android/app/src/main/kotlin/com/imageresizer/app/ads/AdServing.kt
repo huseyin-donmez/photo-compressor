@@ -18,4 +18,12 @@ interface AdServing {
      * @return true only if the reward callback actually fired.
      */
     suspend fun showRewarded(activity: Activity): Boolean
+
+    /**
+     * Show a full-screen interstitial at a natural transition (batch → home).
+     * Best effort: returns false immediately when nothing is loaded, so a
+     * not-ready ad never delays the user.
+     * @return true if an ad was actually shown.
+     */
+    suspend fun showInterstitial(activity: Activity): Boolean
 }

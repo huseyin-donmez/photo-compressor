@@ -26,8 +26,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        // AdMob: Google's PUBLIC TEST IDs while developing — swap in the real
-        // app/ad unit IDs before publishing (docs/ALGORITHM.md: AdMob rewarded + UMP).
+        // AdMob: Google's PUBLIC TEST IDs for debug builds — tapping your own
+        // live ads is invalid traffic, so real IDs only ship in `release`
+        // (overridden below; account verified 2026-09).
         manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
         buildConfigField(
             "String",
@@ -39,6 +40,12 @@ android {
             "String",
             "BANNER_AD_UNIT_ID",
             "\"ca-app-pub-3940256099942544/6300978111\"",
+        )
+        // Full-screen ad on the finished-batch "Done" transition (free only).
+        buildConfigField(
+            "String",
+            "INTERSTITIAL_AD_UNIT_ID",
+            "\"ca-app-pub-3940256099942544/1033173712\"",
         )
         // Play Billing product id for the one-off lifetime unlock (no subscription).
         buildConfigField("String", "PRODUCT_LIFETIME", "\"lifetime\"")
@@ -57,6 +64,24 @@ android {
 
     buildTypes {
         release {
+            // REAL AdMob IDs (debug keeps Google's test IDs above).
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-8419665123353776~8832780276"
+            buildConfigField(
+                "String",
+                "REWARDED_AD_UNIT_ID",
+                "\"ca-app-pub-8419665123353776/6757106266\"",
+            )
+            buildConfigField(
+                "String",
+                "BANNER_AD_UNIT_ID",
+                "\"ca-app-pub-8419665123353776/4402580678\"",
+            )
+            buildConfigField(
+                "String",
+                "INTERSTITIAL_AD_UNIT_ID",
+                "\"ca-app-pub-8419665123353776/3923145080\"",
+            )
+
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
